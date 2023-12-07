@@ -16,7 +16,8 @@ public class UserAuthentication {
         }
     }
 
-    public static void registration(String name, String email, String number, String pin) {
+    public static boolean registration(String name, String email, String number, String pin) {
+        boolean isSuccesful;
         try {
             if (isValidRegisterData(name, email, number)) {
                 String sql = "INSERT INTO users (name, email, number, pin) VALUES (?, ?, ?, ?)";
@@ -28,15 +29,15 @@ public class UserAuthentication {
                 statement.setString(4, pin);
 //                statement.executeUpdate();
 
-                System.out.println("Record created.");
-
+                isSuccesful = true;
             } else {
-                System.out.println("User/Email/Phone already exist.");
+                isSuccesful = false;
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return isSuccesful;
     }
 
     private static boolean isValidRegisterData(String name, String email, String number) {

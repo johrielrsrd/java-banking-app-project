@@ -72,11 +72,13 @@ public class RegisterGUI extends BaseFrame {
                 String number = numberField.getText();
                 String pin = String.valueOf(pinField.getPassword());
 
-                registration(name, email, number, pin);
+                if(registration(name, email, number, pin)) {
+                    JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Successful!");
+                } else {
+                    JOptionPane.showMessageDialog(RegisterGUI.this, "ERROR: Name/Email/Phone Number already exist.");
+                }
             }
         });
         add(registerButton);
-
-
     }
 }
