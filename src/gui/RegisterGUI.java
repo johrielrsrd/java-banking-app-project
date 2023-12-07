@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static data.AppDatabase.testRegister;
+import static data.UserAuthentication.registration;
 
 public class RegisterGUI extends BaseFrame {
     public RegisterGUI() {
@@ -69,10 +69,10 @@ public class RegisterGUI extends BaseFrame {
             public void actionPerformed(ActionEvent e) {
                 String name = nameField.getText();
                 String email = emailField.getText();
-                int number = Integer.parseInt(numberField.getText());
-                int pin = Integer.parseInt(String.valueOf(pinField.getPassword()));
+                String number = numberField.getText();
+                String pin = String.valueOf(pinField.getPassword());
 
-                testRegister(name, email, number, pin);
+                registration(name, email, number, pin);
             }
         });
         add(registerButton);
