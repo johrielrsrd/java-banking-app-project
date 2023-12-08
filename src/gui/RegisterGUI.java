@@ -9,6 +9,8 @@ import static data.UserAuthentication.registration;
 
 public class RegisterGUI extends BaseFrame {
     private String name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String number;
 
@@ -60,8 +62,14 @@ public class RegisterGUI extends BaseFrame {
         numberLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
         add(numberLabel);
 
+        JTextField countryCodeField = new JTextField("+63");
+        countryCodeField.setBounds(20, 370, 55, 40);
+        countryCodeField.setFont(new Font("Dialog", Font.PLAIN, 28));
+        countryCodeField.setEditable(false);
+        add(countryCodeField);
+
         JTextField numberField = new JTextField();
-        numberField.setBounds(20, 370, getWidth() - 50, 40);
+        numberField.setBounds(80, 370, getWidth() - 110, 40);
         numberField.setFont(new Font("Dialog", Font.PLAIN, 28));
         add(numberField);
 
@@ -71,19 +79,48 @@ public class RegisterGUI extends BaseFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                name = firstNameField.getText() + " " + lastNameField.getText();
-                email = emailField.getText();
-                number = numberField.getText();
+                firstName = firstNameField.getText().trim();
+                lastName = lastNameField.getText().trim();
+                email = emailField.getText().trim();
+                number = numberField.getText().trim();
 
-                if(registration(name, email, number)) {
-                    JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Successful!");
-                    RegisterGUI.this.dispose();
-                    new Dialpad(name, email, number).setVisible(true);
+                if (isInputAllValid(firstName, lastName, email, number)) {
+                    name = firstName + " " + lastName;
+                    if (registration(name, email, number)) {
+                        JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Successful!");
+                        RegisterGUI.this.dispose();
+                        new Dialpad(name, email, number).setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(RegisterGUI.this, "ERROR: Name/Email/Phone Number is already registered.");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(RegisterGUI.this, "ERROR: Name/Email/Phone Number already exist.");
+                    System.out.println("Invalid to connect.");
                 }
             }
         });
         add(registerButton);
     }
+
+    private boolean isInputAllValid(String firstName, String lastName, String email, String number) {
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || number.isEmpty()) {
+            JOptionPane.showMessageDialog(RegisterGUI.this, "Please fill all fields.");
+            return false;
+        }
+        if (!firstName.matches("[a-zA-Z ]+")) {
+            JOptionPane.showMessageDialog(RegisterGUI.this, "InValid Name.");
+            return false;
+        }
+
+        if (!lastName.matches("[a-zA-Z ]+")) {
+            JOptionPane.showMessageDialog(RegisterGUI.this, "InValid Name.");
+            return false;
+        }
+
+        if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+            JOptionPane.showMessageDialog(RegisterGUI.this, "Invalid Email.");
+            return false;
+        }
+        return true;
+    }
+
 }

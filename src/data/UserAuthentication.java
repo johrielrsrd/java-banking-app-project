@@ -19,7 +19,7 @@ public class UserAuthentication {
     public static boolean registration(String name, String email, String number) {
         boolean isSuccesful;
         try {
-            if (isValidRegisterData(name, email, number)) {
+            if (isExistingData(name, email, number)) {
                 String sql = "INSERT INTO users (name, email, number) VALUES (?, ?, ?)";
                 PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -39,7 +39,7 @@ public class UserAuthentication {
         return isSuccesful;
     }
 
-    private static boolean isValidRegisterData(String name, String email, String number) {
+    private static boolean isExistingData(String name, String email, String number) {
         boolean isValid;
         try {
             String sql = "SELECT 1 FROM users WHERE name = ? OR email = ? OR number = ?";
