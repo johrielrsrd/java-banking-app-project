@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static data.UserAuthentication.isExistingData;
+
 import static data.UserAuthentication.registration;
 
 public class RegisterGUI extends BaseFrame {
@@ -113,7 +113,7 @@ public class RegisterGUI extends BaseFrame {
 
                 if (isInputAllValid(firstName, lastName, email, number, password, repassword)) {
                     name = firstName + " " + lastName;
-                    if (registration(name, email, number)) {
+                    if (registration(name, email, number, password)) {
                         RegisterGUI.this.dispose();
                         new Dialpad(name, email, number).setVisible(true);
                     } else {

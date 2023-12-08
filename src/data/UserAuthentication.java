@@ -16,16 +16,17 @@ public class UserAuthentication {
         }
     }
 
-    public static boolean registration(String name, String email, String number) {
+    public static boolean registration(String name, String email, String number, String password) {
         boolean isSuccesful;
         try {
             if (isExistingData(name, email, number)) {
-                String sql = "INSERT INTO users (name, email, number) VALUES (?, ?, ?)";
+                String sql = "INSERT INTO users (name, email, number, password) VALUES (?, ?, ?, ?)";
                 PreparedStatement statement = connection.prepareStatement(sql);
 
                 statement.setString(1, name);
                 statement.setString(2, email);
                 statement.setString(3, number);
+                statement.setString(4, password);
                 statement.executeUpdate();
 
                 isSuccesful = true;
@@ -39,7 +40,7 @@ public class UserAuthentication {
         return isSuccesful;
     }
 
-    public static boolean isExistingData(String name, String email, String number) {
+    private static boolean isExistingData(String name, String email, String number) {
         boolean isValid;
         try {
             String sql = "SELECT 1 FROM users WHERE name = ? OR email = ? OR number = ?";
