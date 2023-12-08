@@ -8,6 +8,10 @@ import java.awt.event.ActionListener;
 import static data.UserAuthentication.registration;
 
 public class RegisterGUI extends BaseFrame {
+    private String name;
+    private String email;
+    private String number;
+
     public RegisterGUI() {
         super("Banking App Registration");
     }
@@ -61,29 +65,20 @@ public class RegisterGUI extends BaseFrame {
         numberField.setFont(new Font("Dialog", Font.PLAIN, 28));
         add(numberField);
 
-        JLabel pinLabel = new JLabel("PIN:");
-        pinLabel.setBounds(20, 420, getWidth() - 30, 24);
-        pinLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
-        add(pinLabel);
-
-        JPasswordField pinField = new JPasswordField();
-        pinField.setBounds(20, 450, getWidth() - 50, 40);
-        pinField.setFont(new Font("Dialog", Font.PLAIN, 28));
-        add(pinField);
-
-        JButton registerButton = new JButton("Register");
+        JButton registerButton = new JButton("Next");
         registerButton.setBounds(20, 500, getWidth() - 50, 40);
         registerButton.setFont(new Font("Dialog", Font.BOLD, 20));
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = firstNameField.getText() + " " + lastNameField.getText();
-                String email = emailField.getText();
-                String number = numberField.getText();
-                String pin = String.valueOf(pinField.getPassword());
+                name = firstNameField.getText() + " " + lastNameField.getText();
+                email = emailField.getText();
+                number = numberField.getText();
 
-                if(registration(name, email, number, pin)) {
+                if(registration(name, email, number)) {
                     JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Successful!");
+                    RegisterGUI.this.dispose();
+                    new Dialpad(name, email, number).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(RegisterGUI.this, "ERROR: Name/Email/Phone Number already exist.");
                 }

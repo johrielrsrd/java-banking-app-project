@@ -6,11 +6,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import static data.UserAuthentication.setPIN;
+
 public class Dialpad extends BaseFrame {
     private String pinInput = "";
+    private String name;
+    private String email;
+    private String number;
 
-    public Dialpad() {
+    public Dialpad(String name, String email, String number) {
         super("Enter PIN");
+        this.name = name;
+        this.email = email;
+        this.number = number;
     }
 
     @Override
@@ -167,7 +175,15 @@ public class Dialpad extends BaseFrame {
         enterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(pinField.getText());
+                pinInput = pinField.getText();
+
+                if (pinInput.length() == 6) {
+                    JOptionPane.showMessageDialog(Dialpad.this, "PIN Updated!");
+                    setPIN(name, email, number, pinInput);
+                } else {
+                    JOptionPane.showMessageDialog(Dialpad.this, "Invalid PIN!");
+                }
+
             }
         });
         add(enterButton);

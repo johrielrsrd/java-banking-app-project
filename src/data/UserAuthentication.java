@@ -16,18 +16,17 @@ public class UserAuthentication {
         }
     }
 
-    public static boolean registration(String name, String email, String number, String pin) {
+    public static boolean registration(String name, String email, String number) {
         boolean isSuccesful;
         try {
             if (isValidRegisterData(name, email, number)) {
-                String sql = "INSERT INTO users (name, email, number, pin) VALUES (?, ?, ?, ?)";
+                String sql = "INSERT INTO users (name, email, number) VALUES (?, ?, ?)";
                 PreparedStatement statement = connection.prepareStatement(sql);
 
                 statement.setString(1, name);
                 statement.setString(2, email);
                 statement.setString(3, number);
-                statement.setString(4, pin);
-//                statement.executeUpdate();
+                statement.executeUpdate();
 
                 isSuccesful = true;
             } else {
@@ -56,6 +55,21 @@ public class UserAuthentication {
             throw new RuntimeException(e);
         }
         return isValid;
+    }
+
+    public static void setPIN(String name, String email, String number, String pin) {
+        try {
+            String sql = "UPDATE users SET pin = ? WHERE number = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, pin);
+            statement.setString(2, number);
+            statement.executeUpdate();
+
+            System.out.println("PIN has been set!");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void logIn() {
