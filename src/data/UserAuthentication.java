@@ -39,7 +39,7 @@ public class UserAuthentication {
         return isSuccesful;
     }
 
-    private static boolean isExistingData(String name, String email, String number) {
+    public static boolean isExistingData(String name, String email, String number) {
         boolean isValid;
         try {
             String sql = "SELECT 1 FROM users WHERE name = ? OR email = ? OR number = ?";

@@ -4,7 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import static data.UserAuthentication.isExistingData;
 import static data.UserAuthentication.registration;
 
 public class RegisterGUI extends BaseFrame {
@@ -13,6 +16,8 @@ public class RegisterGUI extends BaseFrame {
     private String lastName;
     private String email;
     private String number;
+    private String password;
+    private String repassword;
 
     public RegisterGUI() {
         super("Banking App Registration");
@@ -73,8 +78,28 @@ public class RegisterGUI extends BaseFrame {
         numberField.setFont(new Font("Dialog", Font.PLAIN, 28));
         add(numberField);
 
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(20, 420, getWidth() - 30, 24);
+        passwordLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        add(passwordLabel);
+
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBounds(20, 450, getWidth() - 50, 40);
+        passwordField.setFont(new Font("Dialog", Font.PLAIN, 28));
+        add(passwordField);
+
+        JLabel repasswordLabel = new JLabel("Re-enter Password:");
+        repasswordLabel.setBounds(20, 500, getWidth() - 30, 24);
+        repasswordLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        add(repasswordLabel);
+
+        JPasswordField repasswordField = new JPasswordField();
+        repasswordField.setBounds(20, 530, getWidth() - 50, 40);
+        repasswordField.setFont(new Font("Dialog", Font.PLAIN, 28));
+        add(repasswordField);
+
         JButton registerButton = new JButton("Next");
-        registerButton.setBounds(20, 500, getWidth() - 50, 40);
+        registerButton.setBounds(20, 580, getWidth() - 50, 40);
         registerButton.setFont(new Font("Dialog", Font.BOLD, 20));
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -83,11 +108,12 @@ public class RegisterGUI extends BaseFrame {
                 lastName = lastNameField.getText().trim();
                 email = emailField.getText().trim();
                 number = numberField.getText().trim();
+                password = String.valueOf(passwordField.getPassword());
+                repassword = String.valueOf(repasswordField.getPassword());
 
-                if (isInputAllValid(firstName, lastName, email, number)) {
+                if (isInputAllValid(firstName, lastName, email, number, password, repassword)) {
                     name = firstName + " " + lastName;
                     if (registration(name, email, number)) {
-                        JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Successful!");
                         RegisterGUI.this.dispose();
                         new Dialpad(name, email, number).setVisible(true);
                     } else {
@@ -101,11 +127,12 @@ public class RegisterGUI extends BaseFrame {
         add(registerButton);
     }
 
-    private boolean isInputAllValid(String firstName, String lastName, String email, String number) {
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || number.isEmpty()) {
+    private boolean isInputAllValid(String firstName, String lastName, String email, String number, String password, String repassword) {
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || number.isEmpty() || password.isEmpty() || repassword.isEmpty()) {
             JOptionPane.showMessageDialog(RegisterGUI.this, "Please fill all fields.");
             return false;
         }
+
         if (!firstName.matches("[a-zA-Z ]+")) {
             JOptionPane.showMessageDialog(RegisterGUI.this, "InValid Name.");
             return false;
@@ -118,6 +145,20 @@ public class RegisterGUI extends BaseFrame {
 
         if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
             JOptionPane.showMessageDialog(RegisterGUI.this, "Invalid Email.");
+            return false;
+        }
+
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+
+        if (!matcher.matches()) {
+            JOptionPane.showMessageDialog(RegisterGUI.this, "Password must be:\nAt least 8 characters long\nContains at least one digit (0-9)\nContains at least one lowercase letter (a-z)\nContains at least one uppercase letter (A-Z)\nContains at least one special character");
+            return false;
+        }
+
+        if (!repassword.equals(password)) {
+            JOptionPane.showMessageDialog(RegisterGUI.this, "Password do not match.");
             return false;
         }
         return true;
