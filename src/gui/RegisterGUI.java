@@ -7,18 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import static data.UserAuthentication.registration;
 
 public class RegisterGUI extends BaseFrame {
-    private String name;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String number;
-    private String password;
-    private String repassword;
-
     public RegisterGUI() {
         super("Banking App Registration");
     }
@@ -104,15 +95,15 @@ public class RegisterGUI extends BaseFrame {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                firstName = firstNameField.getText().trim();
-                lastName = lastNameField.getText().trim();
-                email = emailField.getText().trim();
-                number = numberField.getText().trim();
-                password = String.valueOf(passwordField.getPassword());
-                repassword = String.valueOf(repasswordField.getPassword());
+                String firstName = firstNameField.getText().trim();
+                String lastName = lastNameField.getText().trim();
+                String email = emailField.getText().trim();
+                String number = numberField.getText().trim();
+                String password = String.valueOf(passwordField.getPassword());
+                String repassword = String.valueOf(repasswordField.getPassword());
 
                 if (isInputAllValid(firstName, lastName, email, number, password, repassword)) {
-                    name = firstName + " " + lastName;
+                    String name = firstName + " " + lastName;
                     if (registration(name, email, number, password)) {
                         RegisterGUI.this.dispose();
                         new Dialpad(name, email, number).setVisible(true);
@@ -120,7 +111,7 @@ public class RegisterGUI extends BaseFrame {
                         JOptionPane.showMessageDialog(RegisterGUI.this, "ERROR: Name/Email/Phone Number is already registered.");
                     }
                 } else {
-                    System.out.println("Invalid to connect.");
+                    System.out.println("Invalid to connect in DB.");
                 }
             }
         });
@@ -145,6 +136,12 @@ public class RegisterGUI extends BaseFrame {
 
         if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
             JOptionPane.showMessageDialog(RegisterGUI.this, "Invalid Email.");
+            return false;
+        }
+
+        //INSERT MOBILE VALIDATION HERE
+        if (!number.matches("\\d{10}")) {
+            JOptionPane.showMessageDialog(RegisterGUI.this, "Invalid Mobile Numeber.");
             return false;
         }
 

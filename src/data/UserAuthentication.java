@@ -71,7 +71,7 @@ public class UserAuthentication {
         }
     }
 
-    public static void logIn(String email, String password) {
+    public static User logIn(String email, String password) {
         try {
             String sql = "SELECT * FROM users WHERE email = ? AND binary password = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -79,18 +79,17 @@ public class UserAuthentication {
             statement.setString(2, password);
             ResultSet result = statement.executeQuery();
 
-            while (result.next()) {
-                String column1 = result.getString("name");
-                String column2 = result.getString("email");
-                String column3 = result.getString("number");
-                System.out.println("Column 1: " + column1);
-                System.out.println("Column 2: " + column2);
-                System.out.println("Column 3: " + column3);
+            if (result.next()) {
+                String nameColumn = result.getString("name");
+                String emailColumn = result.getString("email");
+                String numberColumn = result.getString("number");
+
+                return new User(nameColumn, emailColumn, numberColumn);
             }
-            System.out.println("end result");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public static void changePIN() {

@@ -1,5 +1,8 @@
 package gui;
 
+import data.User;
+import data.UserAuthentication;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,10 +10,8 @@ import java.awt.event.ActionListener;
 
 import static data.UserAuthentication.logIn;
 
-public class LogInGUI extends BaseFrame {
-    private String logInEmail;
-    private String logInPassword;
 
+public class LogInGUI extends BaseFrame {
     public LogInGUI() {
         super("Banking App Login");
     }
@@ -49,10 +50,18 @@ public class LogInGUI extends BaseFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                logInEmail = emailField.getText().trim();
-                logInPassword = String.valueOf(passwordField.getPassword());
+                String logInEmail = emailField.getText().trim();
+                String logInPassword = String.valueOf(passwordField.getPassword());
 
-                logIn(logInEmail, logInPassword);
+                User user = logIn(logInEmail, logInPassword);
+
+                if (user!=null) {
+                    LogInGUI.this.dispose();
+                    new UserDashboardGUI(user).setVisible(true);
+                    System.out.println("Login Successful!");
+                } else {
+                    System.out.println("Invalid LogIn");
+                }
             }
         });
         add(loginButton);
