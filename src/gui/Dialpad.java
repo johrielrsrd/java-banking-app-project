@@ -178,7 +178,7 @@ public class Dialpad extends BaseFrame {
                 pinInput = pinField.getText();
 
                 if (pinInput.length() == 6) {
-                    JOptionPane.showMessageDialog(Dialpad.this, "PIN Updated!");
+                    JOptionPane.showMessageDialog(Dialpad.this, "Registration Successful!");
                     setPIN(name, email, number, pinInput);
                 } else {
                     JOptionPane.showMessageDialog(Dialpad.this, "Invalid PIN!");

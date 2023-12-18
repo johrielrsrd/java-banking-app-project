@@ -66,15 +66,31 @@ public class UserAuthentication {
             statement.setString(2, number);
             statement.executeUpdate();
 
-            System.out.println("PIN has been set!");
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void logIn() {
+    public static void logIn(String email, String password) {
+        try {
+            String sql = "SELECT * FROM users WHERE email = ? AND binary password = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setString(2, password);
+            ResultSet result = statement.executeQuery();
 
+            while (result.next()) {
+                String column1 = result.getString("name");
+                String column2 = result.getString("email");
+                String column3 = result.getString("number");
+                System.out.println("Column 1: " + column1);
+                System.out.println("Column 2: " + column2);
+                System.out.println("Column 3: " + column3);
+            }
+            System.out.println("end result");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void changePIN() {
