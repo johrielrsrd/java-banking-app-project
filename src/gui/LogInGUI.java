@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static data.UserAuthentication.checkPIN;
 import static data.UserAuthentication.logIn;
 
 
@@ -55,10 +56,16 @@ public class LogInGUI extends BaseFrame {
 
                 User user = logIn(logInEmail, logInPassword);
 
-                if (user!=null) {
-                    LogInGUI.this.dispose();
-                    new UserDashboardGUI(user).setVisible(true);
-                    System.out.println("Login Successful!");
+                if (user != null) {
+                    if (checkPIN(logInEmail, logInPassword)) {
+                        System.out.println("Required to change PIN");
+                        LogInGUI.this.dispose();
+                        new Dialpad(user).setVisible(true);
+                    } else {
+                        LogInGUI.this.dispose();
+                        new UserDashboardGUI(user).setVisible(true);
+                        System.out.println("Login Successful!");
+                    }
                 } else {
                     System.out.println("Invalid LogIn");
                 }

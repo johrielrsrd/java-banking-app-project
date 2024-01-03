@@ -1,14 +1,12 @@
 package data;
 
 public class User {
-    private final String name, email, number, pin, password;
+    private final String name, email, number;
 
-    public User(String name, String email, String number, String pin, String password) {
+    public User(String name, String email, String number) {
         this.name = name;
         this.email = email;
         this.number = number;
-        this.pin = pin;
-        this.password = password;
     }
 
     public String getName() {
@@ -23,22 +21,4 @@ public class User {
         return number;
     }
 
-    public String getPin() {
-        return pin;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", number='" + number + '\'' +
-                ", pin='" + pin + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

@@ -58,7 +58,28 @@ public class UserAuthentication {
         return isValid;
     }
 
-    public static void setPIN(String name, String email, String number, String pin) {
+    public static boolean checkPIN(String email, String password) {
+        try {
+            String sql = "SELECT * FROM users WHERE email = ? AND binary password = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setString(2, password);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                String pinColumn = result.getString("pin");
+
+                if (pinColumn.equals("123456")) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    public static void setPIN(String number, String pin) {
         try {
             String sql = "UPDATE users SET pin = ? WHERE number = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -83,10 +104,8 @@ public class UserAuthentication {
                 String nameColumn = result.getString("name");
                 String emailColumn = result.getString("email");
                 String numberColumn = result.getString("number");
-                String pinColumn = result.getString("pin");
-                String passwordColumn = result.getString("password");
 
-                return new User(nameColumn, emailColumn, numberColumn, pinColumn, passwordColumn);
+                return new User(nameColumn, emailColumn, numberColumn);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -95,10 +114,6 @@ public class UserAuthentication {
     }
 
     public static void changePIN() {
-
-    }
-
-    public static void logOut() {
 
     }
 }

@@ -1,6 +1,8 @@
 package gui;
 
 
+import data.User;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,15 +12,9 @@ import static data.UserAuthentication.setPIN;
 
 public class Dialpad extends BaseFrame {
     private String pinInput = "";
-    private String name;
-    private String email;
-    private String number;
 
-    public Dialpad(String name, String email, String number) {
-        super("Enter PIN");
-        this.name = name;
-        this.email = email;
-        this.number = number;
+    public Dialpad(User user) {
+        super("Enter PIN", user);
     }
 
     @Override
@@ -177,13 +173,14 @@ public class Dialpad extends BaseFrame {
             public void actionPerformed(ActionEvent e) {
                 pinInput = pinField.getText();
 
-                if (pinInput.length() == 6) {
-                    JOptionPane.showMessageDialog(Dialpad.this, "Registration Successful!");
-                    setPIN(name, email, number, pinInput);
+                if (pinInput.length() == 6 && !pinInput.equals("123456")) {
+                    setPIN(user.getNumber(), pinInput);
+                    JOptionPane.showMessageDialog(Dialpad.this, "PIN Changed!");
+                    Dialpad.this.dispose();
+                    new UserDashboardGUI(user).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(Dialpad.this, "Invalid PIN!");
                 }
-
             }
         });
         add(enterButton);

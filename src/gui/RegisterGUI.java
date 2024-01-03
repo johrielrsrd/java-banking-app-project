@@ -89,7 +89,7 @@ public class RegisterGUI extends BaseFrame {
         repasswordField.setFont(new Font("Dialog", Font.PLAIN, 28));
         add(repasswordField);
 
-        JButton registerButton = new JButton("Next");
+        JButton registerButton = new JButton("Register");
         registerButton.setBounds(20, 580, getWidth() - 50, 40);
         registerButton.setFont(new Font("Dialog", Font.BOLD, 20));
         registerButton.addActionListener(new ActionListener() {
@@ -105,8 +105,9 @@ public class RegisterGUI extends BaseFrame {
                 if (isInputAllValid(firstName, lastName, email, number, password, repassword)) {
                     String name = firstName + " " + lastName;
                     if (registration(name, email, number, password)) {
+                        JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Successful.");
                         RegisterGUI.this.dispose();
-                        new Dialpad(name, email, number).setVisible(true);
+                        new LogInGUI().setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(RegisterGUI.this, "ERROR: Name/Email/Phone Number is already registered.");
                     }
@@ -120,7 +121,7 @@ public class RegisterGUI extends BaseFrame {
 
     private boolean isInputAllValid(String firstName, String lastName, String email, String number, String password, String repassword) {
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || number.isEmpty() || password.isEmpty() || repassword.isEmpty()) {
-            JOptionPane.showMessageDialog(RegisterGUI.this, "Please fill all fields.");
+            JOptionPane.showMessageDialog(RegisterGUI.this, "All fields required.");
             return false;
         }
 
