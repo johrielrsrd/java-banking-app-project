@@ -113,7 +113,4 @@ public class UserAuthentication {
         return null;
     }
 
-    public static void changePIN() {
-
-    }
 }

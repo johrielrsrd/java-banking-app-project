@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -117,6 +119,19 @@ public class RegisterGUI extends BaseFrame {
             }
         });
         add(registerButton);
+
+        JLabel registerLabel = new JLabel("<html><a href=\"#\">Already have an account? LogIn here</a></html>");
+        registerLabel.setBounds(0, 625, getWidth() - 10, 30);
+        registerLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        registerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        registerLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                RegisterGUI.this.dispose();
+                new LogInGUI().setVisible(true);
+            }
+        });
+        add(registerLabel);
     }
 
     private boolean isInputAllValid(String firstName, String lastName, String email, String number, String password, String repassword) {

@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import static data.UserAuthentication.checkPIN;
 import static data.UserAuthentication.logIn;
@@ -73,5 +75,17 @@ public class LogInGUI extends BaseFrame {
         });
         add(loginButton);
 
+        JLabel registerLabel = new JLabel("<html><a href=\"#\">Don't have an account? Register Here</a></html>");
+        registerLabel.setBounds(0, 510, getWidth() - 10, 30);
+        registerLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        registerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        registerLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                LogInGUI.this.dispose();
+                new RegisterGUI().setVisible(true);
+            }
+        });
+        add(registerLabel);
     }
 }
