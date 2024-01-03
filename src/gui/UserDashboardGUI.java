@@ -1,10 +1,13 @@
 package gui;
 
+import com.mysql.cj.log.Log;
 import data.User;
 import data.UserAuthentication;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class UserDashboardGUI extends BaseFrame {
 
@@ -53,6 +56,15 @@ public class UserDashboardGUI extends BaseFrame {
         JButton logoutButton = new JButton("Log Out");
         logoutButton.setBounds(20, 510, getWidth() - 50, 40);
         logoutButton.setFont(new Font("Dialog", Font.BOLD, 20));
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UserDashboardGUI.this.dispose();
+                User user = new User(null, null, null, null, null);
+                System.out.println(user.toString());
+                new LogInGUI().setVisible(true);
+            }
+        });
         add(logoutButton);
     }
 }

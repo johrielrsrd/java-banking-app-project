@@ -30,4 +30,15 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", number='" + number + '\'' +
+                ", pin='" + pin + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
