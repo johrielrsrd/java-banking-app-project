@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static data.CheckBalance.checkBalance;
+
 public class UserDashboardGUI extends BaseFrame {
 
     public UserDashboardGUI(User user) {
@@ -38,6 +40,22 @@ public class UserDashboardGUI extends BaseFrame {
         numberLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
         add(numberLabel);
 
+        JLabel idLabel = new JLabel("Your ID number: " + user.getId());
+        idLabel.setBounds(20, 240, getWidth() - 30, 24);
+        idLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
+        add(idLabel);
+
+        JButton checkBalance = new JButton("Check Balance");
+        checkBalance.setBounds(20, 410, getWidth() - 50, 40);
+        checkBalance.setFont(new Font("Dialog", Font.BOLD, 20));
+        checkBalance.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(UserDashboardGUI.this, "Your current balance is: " + checkBalance(user));
+            }
+        });
+        add(checkBalance);
+
         JButton changePin = new JButton("Change PIN");
         changePin.setBounds(20, 460, getWidth() - 50, 40);
         changePin.setFont(new Font("Dialog", Font.BOLD, 20));
@@ -57,7 +75,7 @@ public class UserDashboardGUI extends BaseFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 UserDashboardGUI.this.dispose();
-                User user = new User(null, null, null);
+                User user = new User(0, null, null, null);
                 new LogInGUI().setVisible(true);
             }
         });

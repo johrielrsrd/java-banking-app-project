@@ -101,11 +101,12 @@ public class UserAuthentication {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
+                int idColumn = result.getInt("id");
                 String nameColumn = result.getString("name");
                 String emailColumn = result.getString("email");
                 String numberColumn = result.getString("number");
 
-                return new User(nameColumn, emailColumn, numberColumn);
+                return new User(idColumn, nameColumn, emailColumn, numberColumn);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
