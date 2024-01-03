@@ -83,8 +83,10 @@ public class UserAuthentication {
                 String nameColumn = result.getString("name");
                 String emailColumn = result.getString("email");
                 String numberColumn = result.getString("number");
+                String pinColumn = result.getString("pin");
+                String passwordColumn = result.getString("password");
 
-                return new User(nameColumn, emailColumn, numberColumn);
+                return new User(nameColumn, emailColumn, numberColumn, pinColumn, passwordColumn);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
