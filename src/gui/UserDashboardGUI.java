@@ -35,6 +35,14 @@ public class UserDashboardGUI extends BaseFrame {
         numberLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
         add(numberLabel);
 
+        JButton changePin = new JButton("Change PIN");
+        changePin.setBounds(20, 460, getWidth() - 50, 40);
+        changePin.setFont(new Font("Dialog", Font.BOLD, 20));
+        add(changePin);
 
+        JButton logoutButton = new JButton("Log Out");
+        logoutButton.setBounds(20, 510, getWidth() - 50, 40);
+        logoutButton.setFont(new Font("Dialog", Font.BOLD, 20));
+        add(logoutButton);
     }
 }
