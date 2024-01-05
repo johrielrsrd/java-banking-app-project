@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static data.CashIn.cashIn;
 import static data.CheckBalance.checkBalance;
 
 public class UserDashboardGUI extends BaseFrame {
@@ -35,7 +36,7 @@ public class UserDashboardGUI extends BaseFrame {
         emailLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
         add(emailLabel);
 
-        JLabel numberLabel = new JLabel("Your number is: " + user.getNumber());
+        JLabel numberLabel = new JLabel("Your number is: +63" + user.getNumber());
         numberLabel.setBounds(20, 200, getWidth() - 30, 24);
         numberLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
         add(numberLabel);
@@ -45,16 +46,39 @@ public class UserDashboardGUI extends BaseFrame {
         idLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
         add(idLabel);
 
-        JButton checkBalance = new JButton("Check Balance");
-        checkBalance.setBounds(20, 410, getWidth() - 50, 40);
-        checkBalance.setFont(new Font("Dialog", Font.BOLD, 20));
-        checkBalance.addActionListener(new ActionListener() {
+        JTextField cashInField = new JTextField();
+        cashInField.setBounds(20, 310, getWidth() - 50, 40);
+        cashInField.setFont(new Font("Dialog", Font.PLAIN, 28));
+        cashInField.setHorizontalAlignment(SwingConstants.CENTER);
+        add(cashInField);
+
+        JButton cashInButton = new JButton("Cash In");
+        cashInButton.setBounds(20, 360, getWidth() - 50, 40);
+        cashInButton.setFont(new Font("Dialog", Font.BOLD, 20));
+        cashInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    double cashInAmount = Double.parseDouble(cashInField.getText());
+                    cashIn(user, cashInAmount);
+                    JOptionPane.showMessageDialog(UserDashboardGUI.this, "Your Cash In amount is: " + cashInAmount);
+                } catch (NumberFormatException exception) {
+                    JOptionPane.showMessageDialog(UserDashboardGUI.this, "Invalid Input");
+                }
+            }
+        });
+        add(cashInButton);
+
+        JButton checkBalanceButton = new JButton("Check Balance");
+        checkBalanceButton.setBounds(20, 410, getWidth() - 50, 40);
+        checkBalanceButton.setFont(new Font("Dialog", Font.BOLD, 20));
+        checkBalanceButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(UserDashboardGUI.this, "Your current balance is: " + checkBalance(user));
             }
         });
-        add(checkBalance);
+        add(checkBalanceButton);
 
         JButton changePin = new JButton("Change PIN");
         changePin.setBounds(20, 460, getWidth() - 50, 40);
@@ -81,4 +105,6 @@ public class UserDashboardGUI extends BaseFrame {
         });
         add(logoutButton);
     }
+
+
 }
