@@ -44,19 +44,13 @@ public class CashTransferGUI extends BaseFrame {
         nameField.setFont(new Font("Dialog", Font.PLAIN, 28));
         add(nameField);
 
-        JLabel accountIDLabel = new JLabel("Phone Number");
+        JLabel accountIDLabel = new JLabel("Account ID");
         accountIDLabel.setBounds(20, 260, getWidth() - 30, 24);
         accountIDLabel.setFont(new Font("Dialog", Font.PLAIN, 20));
         add(accountIDLabel);
 
-        JTextField countryCodeField = new JTextField("+63");
-        countryCodeField.setBounds(20, 290, 55, 40);
-        countryCodeField.setFont(new Font("Dialog", Font.PLAIN, 28));
-        countryCodeField.setEditable(false);
-        add(countryCodeField);
-
         JTextField accountIDField = new JTextField();
-        accountIDField.setBounds(80, 290, getWidth() - 110, 40);
+        accountIDField.setBounds(20, 290, getWidth() - 50, 40);
         accountIDField.setFont(new Font("Dialog", Font.PLAIN, 28));
         add(accountIDField);
 
@@ -96,6 +90,5 @@ public class CashTransferGUI extends BaseFrame {
             }
         });
         add(transferCancelButton);
-
     }
 }
