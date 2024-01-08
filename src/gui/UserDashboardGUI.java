@@ -47,13 +47,13 @@ public class UserDashboardGUI extends BaseFrame {
         add(idLabel);
 
         JTextField cashInField = new JTextField();
-        cashInField.setBounds(20, 310, getWidth() - 50, 40);
+        cashInField.setBounds(20, 330, getWidth() - 50, 40);
         cashInField.setFont(new Font("Dialog", Font.PLAIN, 28));
         cashInField.setHorizontalAlignment(SwingConstants.CENTER);
         add(cashInField);
 
         JButton cashInButton = new JButton("Cash In");
-        cashInButton.setBounds(20, 360, getWidth() - 50, 40);
+        cashInButton.setBounds(20, 380, getWidth() - 50, 40);
         cashInButton.setFont(new Font("Dialog", Font.BOLD, 20));
         cashInButton.addActionListener(new ActionListener() {
             @Override
@@ -69,8 +69,20 @@ public class UserDashboardGUI extends BaseFrame {
         });
         add(cashInButton);
 
+        JButton cashTransferButton = new JButton("Cash Transfer");
+        cashTransferButton.setBounds(20, 430, getWidth() - 50, 40);
+        cashTransferButton.setFont(new Font("Dialog", Font.BOLD, 20));
+        cashTransferButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UserDashboardGUI.this.dispose();
+                new CashTransferGUI(user).setVisible(true);
+            }
+        });
+        add(cashTransferButton);
+
         JButton checkBalanceButton = new JButton("Check Balance");
-        checkBalanceButton.setBounds(20, 410, getWidth() - 50, 40);
+        checkBalanceButton.setBounds(20, 480, getWidth() - 50, 40);
         checkBalanceButton.setFont(new Font("Dialog", Font.BOLD, 20));
         checkBalanceButton.addActionListener(new ActionListener() {
             @Override
@@ -81,7 +93,7 @@ public class UserDashboardGUI extends BaseFrame {
         add(checkBalanceButton);
 
         JButton changePin = new JButton("Change PIN");
-        changePin.setBounds(20, 460, getWidth() - 50, 40);
+        changePin.setBounds(20, 530, getWidth() - 50, 40);
         changePin.setFont(new Font("Dialog", Font.BOLD, 20));
         changePin.addActionListener(new ActionListener() {
             @Override
@@ -93,7 +105,7 @@ public class UserDashboardGUI extends BaseFrame {
         add(changePin);
 
         JButton logoutButton = new JButton("Log Out");
-        logoutButton.setBounds(20, 510, getWidth() - 50, 40);
+        logoutButton.setBounds(20, 580, getWidth() - 50, 40);
         logoutButton.setFont(new Font("Dialog", Font.BOLD, 20));
         logoutButton.addActionListener(new ActionListener() {
             @Override

@@ -1,7 +1,5 @@
-import gui.Dialpad;
-import gui.LogInGUI;
-import gui.RegisterGUI;
-import gui.UserDashboardGUI;
+import data.User;
+import gui.*;
 
 public class App {
     public static void main(String[] args) {

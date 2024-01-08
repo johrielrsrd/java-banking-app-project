@@ -25,7 +25,7 @@ public class CheckBalance {
 
             if (result.next()) {
 
-                return result.getInt("amount");
+                return result.getDouble("amount");
             }
 
         } catch (Exception e) {
